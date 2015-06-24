@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  GalleryTableViewController.h
 //  iOS-Challenge
 //
 //  Created by Diego Batista Dias Leite on 6/24/15.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface GalleryTableViewController : UITableViewController
 
 @end
-
