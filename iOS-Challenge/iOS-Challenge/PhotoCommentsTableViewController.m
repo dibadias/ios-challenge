@@ -1,52 +1,27 @@
 //
-//  GalleryTableViewController.m
+//  PhotoCommentsTableViewController.m
 //  iOS-Challenge
 //
 //  Created by Diego Batista Dias Leite on 6/24/15.
 //  Copyright (c) 2015 HElabs. All rights reserved.
 //
 
-#import "GalleryTableViewController.h"
-#import "GalleryTableViewCell.h"
-#import "FlickrManager.h"
-#import "SVProgressHUD.h"
-#import "PhotoDetailTableViewController.h"
+#import "PhotoCommentsTableViewController.h"
 
-@interface GalleryTableViewController ()
+@interface PhotoCommentsTableViewController ()
 
 @end
 
-static NSString * const reuseIdentifier = @"GalleryCellIdentifier";
-
-
-@implementation GalleryTableViewController
+@implementation PhotoCommentsTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
-    self.title = NSLocalizedString(@"Place's Gallery", @"");
-
-    [SVProgressHUD showWithStatus:NSLocalizedString(@"Loading...", @"")];
-    [SVProgressHUD setBackgroundColor:[UIColor lightGrayColor]];
-    [self updateList];
     
-}
-             
-- (void)updateList{
+    // Uncomment the following line to preserve selection between presentations.
+    // self.clearsSelectionOnViewWillAppear = NO;
     
-    [FlickrManager getRecentPhotosList:^(NSArray *recentPhotos) {
-
-        self.photoArray = recentPhotos;
-        [self.tableView reloadData];
-       
-        [SVProgressHUD dismiss];
-
-    } failure:^(NSString *failureDesciption) {
-        [SVProgressHUD dismiss];
-
-    }];
-
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -63,27 +38,27 @@ static NSString * const reuseIdentifier = @"GalleryCellIdentifier";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return [self.photoArray count];
+    return 5;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-
-    GalleryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
-    FlickrPhoto *flickrPhoto = self.photoArray[indexPath.row];
-
-    [cell bind:flickrPhoto];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PhotoCommentCellIdentifier" forIndexPath:indexPath];
+    
+    // Configure the cell...
+    [[cell textLabel] setText:@"AEW"];
     
     return cell;
 }
 
 
+/*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     // Return NO if you do not want the specified item to be editable.
     return YES;
 }
-
+*/
 
 /*
 // Override to support editing the table view.
@@ -121,12 +96,4 @@ static NSString * const reuseIdentifier = @"GalleryCellIdentifier";
 }
 */
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"PhotoDetailSegueIdentifier"])
-    {
-        PhotoDetailTableViewController *photoDetailViewController = (PhotoDetailTableViewController*) segue.destinationViewController;
-        
-        photoDetailViewController.flickPhoto = [self.photoArray objectAtIndex:self.tableView.indexPathForSelectedRow.row];
-    }
-}
 @end

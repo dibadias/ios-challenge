@@ -7,7 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AFNetworking/AFNetworking.h>
 #import "FlickrPhoto.h"
+#import "FlickrPhotoOwner.h"
 
 @interface FlickrManager : NSObject
 
@@ -17,5 +19,6 @@
 @property (strong) NSString *flickrSecret;
 
 +(void)getRecentPhotosList:(void (^)(NSArray *recentPhotos))successBlock failure:(void (^)(NSString *failureDesciption))failureBlock;
++(void)getUserInfo:(void (^)(FlickrPhotoOwner *photoOwnerInfo))successBlock failure:(void (^)(NSString *failureDesciption))failureBlock userId:(NSString *)UserId;
 
 @end

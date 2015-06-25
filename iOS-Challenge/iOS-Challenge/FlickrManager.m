@@ -7,8 +7,6 @@
 //
 
 #import "FlickrManager.h"
-#import <AFNetworking/AFNetworking.h>
-
 @implementation FlickrManager
 
 
@@ -58,6 +56,7 @@
             
             FlickrPhoto *flickrPhoto = [MTLJSONAdapter modelOfClass:[FlickrPhoto class] fromJSONDictionary:photoDict error:nil];
             [flickrPhoto setPhotoThumbUrl:[self photoThumbUrl:flickrPhoto]];
+            [flickrPhoto setPhotoBigSizeUrl:[self photoBigSizeUrl:flickrPhoto]];
             [photos addObject:flickrPhoto];
 
         }
@@ -70,12 +69,66 @@
     }];
 }
 
-+(NSString *)photoThumbUrl:(FlickrPhoto *)flickrPhoto{
-    //https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}.jpg
++(void)getUserInfo:(void (^)(FlickrPhotoOwner *photoOwnerInfo))successBlock failure:(void (^)(NSString *failureDesciption))failureBlock userId:(NSString *)UserId{
+    
 
-    return [NSString stringWithFormat:@"https://farm%@.staticflickr.com/%@/%@_%@_t.jpg", flickrPhoto.farm, flickrPhoto.server, flickrPhoto.photoId, flickrPhoto.secret];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    NSDictionary *parameters = @{@"method":@"flickr.people.getInfo",
+                                 @"api_key":[[self sharedFlickrManager]flickrKey],
+                                 @"format":@"json",
+                                 @"nojsoncallback":@"1",
+                                 @"user_id":UserId,
+                                 };
+    
+    [manager GET:[[self sharedFlickrManager]baseUrl] parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *photoOwnerDict = (NSDictionary *)[responseObject objectForKey:@"person"];
+        
+        NSError *error;
+        FlickrPhotoOwner *flickrPhotoOwner = [MTLJSONAdapter modelOfClass:[FlickrPhotoOwner class] fromJSONDictionary:photoOwnerDict error:&error];
+        [flickrPhotoOwner setPhotoOwnerUrl:[self photoOwnerUrl:flickrPhotoOwner]];
+        
+        if (!error){
+            if (successBlock) successBlock(flickrPhotoOwner);
+        }
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        if (failureBlock) failureBlock([error description]);
+    }];
+
+}
+
+
+
+
+#pragma mark
+#pragma mark Utils
++ (NSString *)photoThumbUrl:(FlickrPhoto *)flickrPhoto{
+    //https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}.jpg
+    NSString *photoThumbUrl = [NSString stringWithFormat:@"https://farm%@.staticflickr.com/%@/%@_%@_t.jpg", flickrPhoto.farm, flickrPhoto.server, flickrPhoto.photoId, flickrPhoto.secret];
+    return photoThumbUrl;
     
 }
+
++ (NSString*)photoBigSizeUrl:(FlickrPhoto *)flickrPhoto {
+    //http://farm{icon-farm}.staticflickr.com/{icon-server}/buddyicons/{nsid}.jpg
+    NSString *photoBigSizeUrl = [NSString stringWithFormat:@"https://farm%@.staticflickr.com/%@/%@_%@_b.jpg",
+                                 flickrPhoto.farm, flickrPhoto.server, flickrPhoto.photoId, flickrPhoto.secret];
+    
+    return photoBigSizeUrl;
+}
+
++ (NSString*)photoOwnerUrl:(FlickrPhotoOwner *)flickPhotoOwner {
+    //http://farm{icon-farm}.staticflickr.com/{icon-server}/buddyicons/{nsid}.jpg
+    NSString *photoOwnerUrl = [NSString stringWithFormat:@"https://farm%@.staticflickr.com/%@/buddyicons/%@.jpg",
+                               flickPhotoOwner.iconFarm, flickPhotoOwner.iconServer, flickPhotoOwner.idOwner];
+    return photoOwnerUrl;
+}
+
+
 
 
 @end

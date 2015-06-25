@@ -1,5 +1,5 @@
 //
-//  PhotoDetailViewController.h
+//  PhotoCommentsTableViewController.h
 //  iOS-Challenge
 //
 //  Created by Diego Batista Dias Leite on 6/24/15.
@@ -7,9 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "FlickrPhoto.h"
-@interface PhotoDetailViewController : UIViewController
 
-@property (strong) FlickrPhoto *flickPhoto;
+@interface PhotoCommentsTableViewController : UITableViewController
 
 @end

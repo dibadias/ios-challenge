@@ -22,5 +22,6 @@
 
 //Custom Properties
 @property (strong) NSString *photoThumbUrl;
+@property (strong) NSString *photoBigSizeUrl;
 
 @end
