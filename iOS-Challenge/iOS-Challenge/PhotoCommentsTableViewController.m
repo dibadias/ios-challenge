@@ -28,7 +28,10 @@ static NSString * const reuseIdentifier = @"PhotoCommentCellIdentifier";
     
     [FlickrManager getComments:^(NSArray *arrayComments) {
         self.commentsArray = arrayComments;
+        
+        
         [self.tableView reloadData];
+        
     } failure:^(NSString *failureDesciption) {
         
     } photoId:self.flickrPhoto.photoId];
@@ -64,6 +67,30 @@ static NSString * const reuseIdentifier = @"PhotoCommentCellIdentifier";
     return cell;
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    
+    static NSString *CellIdentifier = @"CommentHeader";
+    
+    UITableViewCell *headerView = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (headerView == nil){
+        [NSException raise:@"headerView == nil.." format:@"No cells with matching CellIdentifier loaded from your storyboard"];
+    }
+    
+    UILabel *labelNumberOfComments = (UILabel *)[headerView viewWithTag:1];
+    UILabel *labelNumberOfViews = (UILabel *)[headerView viewWithTag:2];
+    
+    [labelNumberOfComments setText:[NSString stringWithFormat:@"%lu %@",(unsigned long)self.commentsArray.count, NSLocalizedString(@"Comments",@"")]];
+    [labelNumberOfViews setText:@"Paraná"];
+    
+
+    
+    return headerView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    
+    return 37.f;
+}
 
 /*
 // Override to support conditional editing of the table view.
