@@ -28,7 +28,7 @@
     [self.labelPhotoTitle setText:self.flickPhoto.title];
     
     //Big Photo Fill
-    UIImage *placeholderImage = [UIImage imageNamed:@"flickr-noImage"];
+    UIImage *placeholderImage = [UIImage imageNamed:@"flickr-noImage-grey"];
     NSURL *urlBigPhoto = [NSURL URLWithString:self.flickPhoto.photoBigSizeUrl];
     [self.imageViewPhotoBig setImageWithURL:urlBigPhoto placeholderImage:placeholderImage];
 
@@ -48,7 +48,7 @@
     self.imageViewOwnerPhoto.layer.cornerRadius = self.imageViewOwnerPhoto.frame.size.width/2;
     self.imageViewOwnerPhoto.layer.masksToBounds = YES;
 
-    UIImage *placeholderImage = [UIImage imageNamed:@"flickr-noImage"];
+    UIImage *placeholderImage = [UIImage imageNamed:@"user-noPhoto"];
     NSURL *urlThumb = [NSURL URLWithString:self.flickrOwner.photoOwnerUrl];
     
     [self.imageViewOwnerPhoto setImageWithURL:urlThumb placeholderImage:placeholderImage];

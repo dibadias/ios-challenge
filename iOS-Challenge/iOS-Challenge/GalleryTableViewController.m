@@ -16,8 +16,8 @@
 
 @end
 
-static NSString * const reuseIdentifier = @"GalleryCellIdentifier";
-
+static NSString * const reuseIdentifierGalleryCell = @"GalleryCellIdentifier";
+static NSString * const reuseIdentifierLoadMore = @"LoadMorePhotosIdentifier";
 
 @implementation GalleryTableViewController
 
@@ -29,24 +29,41 @@ static NSString * const reuseIdentifier = @"GalleryCellIdentifier";
 
     [SVProgressHUD showWithStatus:NSLocalizedString(@"Loading...", @"")];
     [SVProgressHUD setBackgroundColor:[UIColor lightGrayColor]];
-    [self updateList];
     
+    self.currentPageNumber = 1;
+    
+    [self updateList:self.currentPageNumber];
+
 }
-             
-- (void)updateList{
+
+- (void)updateList:(int)page{
     
     [FlickrManager getRecentPhotosList:^(NSArray *recentPhotos) {
 
-        self.photoArray = recentPhotos;
+        // If page number are current, just update array
+        if(page == self.currentPageNumber){
+        
+            self.photoArray = recentPhotos;
+            self.currentPageNumber = page;
+        
+        }else{
+            // Add new items on array
+            
+            NSMutableArray * mutableArray = [NSMutableArray arrayWithArray:self.photoArray];
+            [mutableArray addObjectsFromArray:recentPhotos];
+            self.photoArray = mutableArray;
+        
+        }
+        
         [self.tableView reloadData];
-       
         [SVProgressHUD dismiss];
 
     } failure:^(NSString *failureDesciption) {
+
         [SVProgressHUD dismiss];
 
-    }];
-
+    } pageNumber:page];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -63,20 +80,63 @@ static NSString * const reuseIdentifier = @"GalleryCellIdentifier";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return [self.photoArray count];
+    
+    //+ 1 for LoadMore
+    return [self.photoArray count]+1;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSUInteger row = [indexPath row];
+    NSUInteger count = [self.photoArray count];
+    
+    if (row == count){
+        return 50.f;
+    }
+
+    return 85.f;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    GalleryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
-    FlickrPhoto *flickrPhoto = self.photoArray[indexPath.row];
-
-    [cell bind:flickrPhoto];
+    NSUInteger row = [indexPath row];
+    NSUInteger count = [self.photoArray count];
     
-    return cell;
+    if (row == count){
+        
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierLoadMore forIndexPath:indexPath];
+
+        cell.textLabel.text = NSLocalizedString(@"Load More Photos...", @"");
+        [cell.textLabel setTextAlignment:NSTextAlignmentCenter];
+        cell.textLabel.textColor = [UIColor grayColor];
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:14];
+
+        return cell;
+
+    
+    }else{
+        
+        GalleryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierGalleryCell forIndexPath:indexPath];
+        FlickrPhoto *flickrPhoto = self.photoArray[indexPath.row];
+        
+        [cell bind:flickrPhoto];
+
+        return cell;
+
+    }
+    
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    NSUInteger row = [indexPath row];
+    NSUInteger count = [self.photoArray count];
+    
+    if (row == count){
+        [self updateList:self.currentPageNumber+1];
+        
+    }
+}
 
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {

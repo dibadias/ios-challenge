@@ -11,5 +11,6 @@
 @interface GalleryTableViewController : UITableViewController
 
 @property (strong) NSArray *photoArray;
+@property int currentPageNumber;
 
 @end

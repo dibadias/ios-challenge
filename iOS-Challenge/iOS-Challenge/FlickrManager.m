@@ -26,7 +26,7 @@
         flickrManager.flickrKey = [dict objectForKey:@"flickrKey"];
         flickrManager.flickrSecret = [dict objectForKey:@"flickrSecret"];
         
-        
+        flickrManager.page = 1;
     });
     
     return flickrManager;
@@ -35,15 +35,17 @@
 }
 
 
-+(void)getRecentPhotosList:(void (^)(NSArray *recentPhotos))successBlock failure:(void (^)(NSString *failureDesciption))failureBlock{
++(void)getRecentPhotosList:(void (^)(NSArray *recentPhotos))successBlock failure:(void (^)(NSString *failureDesciption))failureBlock pageNumber:(int)pageNumber{
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
+    //get the Extra information from API, look Flickr documentation
     NSDictionary *parameters = @{@"method":@"flickr.photos.getRecent",
                                  @"api_key":[[self sharedFlickrManager]flickrKey],
                                  @"format":@"json",
                                  @"nojsoncallback":@"1",
-                                 @"page":@"5",
+                                 @"page":[NSString stringWithFormat:@"%d",[[FlickrManager sharedFlickrManager]page]],
+                                 @"per_page":@"10",
                                  @"extras":@"views,owner_name"};
     
     [manager GET:[[self sharedFlickrManager]baseUrl] parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {

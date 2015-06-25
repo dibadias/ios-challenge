@@ -80,7 +80,7 @@ static NSString * const reuseIdentifier = @"PhotoCommentCellIdentifier";
     UILabel *labelNumberOfViews = (UILabel *)[headerView viewWithTag:2];
     
     [labelNumberOfComments setText:[NSString stringWithFormat:@"%lu %@",(unsigned long)self.commentsArray.count, NSLocalizedString(@"Comments",@"")]];
-    [labelNumberOfViews setText:@"Paraná"];
+    [labelNumberOfViews setText:[NSString stringWithFormat:@"%@ %@",self.flickrPhoto.numberOfViews, NSLocalizedString(@"Views",@"")]];
     
 
     

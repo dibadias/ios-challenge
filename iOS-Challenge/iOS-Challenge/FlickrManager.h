@@ -19,7 +19,9 @@
 @property (strong) NSString *flickrKey;
 @property (strong) NSString *flickrSecret;
 
-+(void)getRecentPhotosList:(void (^)(NSArray *recentPhotos))successBlock failure:(void (^)(NSString *failureDesciption))failureBlock;
+@property int page;
+
++(void)getRecentPhotosList:(void (^)(NSArray *recentPhotos))successBlock failure:(void (^)(NSString *failureDesciption))failureBlock pageNumber:(int)pageNumber;
 +(void)getUserInfo:(void (^)(FlickrPhotoOwner *photoOwnerInfo))successBlock failure:(void (^)(NSString *failureDesciption))failureBlock userId:(NSString *)UserId;
 +(void)getComments:(void (^)(NSArray *arrayComments))successBlock failure:(void (^)(NSString *failureDesciption))failureBlock photoId:(NSString *)photoId;
 
