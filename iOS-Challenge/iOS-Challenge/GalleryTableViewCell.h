@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "FlickrPhoto.h"
 @interface GalleryTableViewCell : UITableViewCell
 
 @property IBOutlet UIImageView *imageViewPhoto;
@@ -15,6 +15,6 @@
 @property IBOutlet UILabel *labelPhotoTitle;
 @property IBOutlet UILabel *labelPhotoOwner;
 
--(void)bind:(id)FlickrPhoto;
+-(void)bind:(FlickrPhoto *)flickrPhoto;
 
 @end

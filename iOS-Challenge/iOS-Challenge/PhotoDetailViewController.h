@@ -1,5 +1,5 @@
 //
-//  GalleryTableViewController.h
+//  PhotoDetailViewController.h
 //  iOS-Challenge
 //
 //  Created by Diego Batista Dias Leite on 6/24/15.
@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FlickrPhoto.h"
+@interface PhotoDetailViewController : UIViewController
 
-@interface GalleryTableViewController : UITableViewController
-
-@property (strong) NSArray *photoArray;
+@property (strong) FlickrPhoto *flickPhoto;
 
 @end

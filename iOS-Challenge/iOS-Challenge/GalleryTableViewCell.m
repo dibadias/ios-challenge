@@ -7,16 +7,29 @@
 //
 
 #import "GalleryTableViewCell.h"
+#import <UIImageView+AFNetworking.h>
+#import <QuartzCore/QuartzCore.h>
+
 
 @implementation GalleryTableViewCell
 
 - (void)awakeFromNib {
     // Initialization code
+    self.imageViewPhoto.layer.masksToBounds = YES;
+    self.imageViewPhoto.layer.cornerRadius = 6.0f;
+    
 }
 
--(void)bind:(id)FlickrPhoto{
-    [self.labelPhotoTitle setText:@"Spetacular View"];
-    [self.labelPhotoOwner setText:@"Diba Dias"];
+-(void)bind:(FlickrPhoto *)flickrPhoto{
+    
+    
+    [self.labelPhotoTitle setText:flickrPhoto.title];
+    [self.labelPhotoOwner setText:flickrPhoto.ownerName];
+
+    UIImage *placeholderImage = [UIImage imageNamed:@"flickr-noImage"];
+    NSURL *urlThumb = [NSURL URLWithString:flickrPhoto.photoThumbUrl];
+    
+    [self.imageViewPhoto setImageWithURL:urlThumb placeholderImage:placeholderImage];
 
 }
 
