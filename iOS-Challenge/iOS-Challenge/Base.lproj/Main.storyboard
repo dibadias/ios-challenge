@@ -156,7 +156,7 @@
                                                 <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bob-z2-lJe">
                                                     <rect key="frame" x="0.0" y="0.0" width="600" height="160"/>
                                                     <connections>
-                                                        <segue destination="gVe-7c-S1S" kind="embed" id="Acq-XB-7tr"/>
+                                                        <segue destination="gVe-7c-S1S" kind="embed" identifier="CommentSegueIdentifier" id="Acq-XB-7tr"/>
                                                     </connections>
                                                 </containerView>
                                             </subviews>
@@ -212,16 +212,25 @@
         <scene sceneID="ckw-r3-r2r">
             <objects>
                 <tableViewController id="gVe-7c-S1S" customClass="PhotoCommentsTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="66" sectionHeaderHeight="22" sectionFooterHeight="22" id="kUf-F7-Zak">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="66" sectionHeaderHeight="22" sectionFooterHeight="22" id="kUf-F7-Zak">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="160"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PhotoCommentCellIdentifier" id="W4c-Il-PRt" customClass="PhotoCommentTableViewCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="W4c-Il-PRt" id="GPp-NW-jzw">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R1V-Ry-vZD">
+                                            <rect key="frame" x="64" y="11" width="397" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="iXD-9h-KmF"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Y30-ij-VrK">
                                             <rect key="frame" x="8" y="8" width="48" height="49"/>
                                             <constraints>
@@ -234,25 +243,17 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="hBS-kw-EwB"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R1V-Ry-vZD">
-                                            <rect key="frame" x="64" y="11" width="259" height="21"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="21" id="iXD-9h-KmF"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="PJT-uJ-vVP" firstAttribute="top" secondItem="R1V-Ry-vZD" secondAttribute="bottom" constant="4" id="6GN-tN-KNp"/>
                                         <constraint firstItem="PJT-uJ-vVP" firstAttribute="leading" secondItem="Y30-ij-VrK" secondAttribute="trailing" constant="8" id="9L3-q5-Pfx"/>
                                         <constraint firstItem="R1V-Ry-vZD" firstAttribute="top" secondItem="GPp-NW-jzw" secondAttribute="topMargin" constant="3" id="GhB-Kc-kCp"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="R1V-Ry-vZD" secondAttribute="trailing" constant="269" id="H2H-NG-H4E"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="R1V-Ry-vZD" secondAttribute="trailing" constant="131" id="H2H-NG-H4E"/>
                                         <constraint firstItem="Y30-ij-VrK" firstAttribute="leading" secondItem="GPp-NW-jzw" secondAttribute="leadingMargin" id="HtN-bO-Mcm"/>
                                         <constraint firstItem="PJT-uJ-vVP" firstAttribute="trailing" secondItem="GPp-NW-jzw" secondAttribute="trailingMargin" id="Pab-7b-fXH"/>
                                         <constraint firstItem="R1V-Ry-vZD" firstAttribute="leading" secondItem="Y30-ij-VrK" secondAttribute="trailing" constant="8" id="Vlc-yk-BCa"/>

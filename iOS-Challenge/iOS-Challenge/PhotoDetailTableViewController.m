@@ -9,6 +9,7 @@
 #import "PhotoDetailTableViewController.h"
 #import <UIImageView+AFNetworking.h>
 #import <QuartzCore/QuartzCore.h>
+#import "PhotoCommentsTableViewController.h"
 
 @interface PhotoDetailTableViewController ()
 
@@ -33,7 +34,6 @@
 
     
     [FlickrManager getUserInfo:^(FlickrPhotoOwner *photoOwnerInfo) {
-        NSLog(@"photoOwner:%@",photoOwnerInfo);
         self.flickrOwner = photoOwnerInfo;
         [self fillOwner];
 
@@ -66,6 +66,23 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"CommentSegueIdentifier"]) {
+        
+        PhotoCommentsTableViewController *photoCommentTableViewController = (PhotoCommentsTableViewController*) segue.destinationViewController;
+        
+        photoCommentTableViewController.flickrPhoto = self.flickPhoto;
+
+        
+        /*self.commentsViewController = (CommentsTableViewController*) segue.destinationViewController;
+        
+        
+        self.commentsViewController.delegate = self;
+        self.commentsViewController.flickrPhoto = self.flickrPhoto;
+         */
+    }
 }
 
 /*

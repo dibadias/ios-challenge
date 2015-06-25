@@ -7,13 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "FlickrPhotoComment.h"
 @interface PhotoCommentTableViewCell : UITableViewCell
 
 @property IBOutlet UIImageView *imageViewCommentUser;
 
 @property IBOutlet UILabel *labelCommentUserName;
 @property IBOutlet UILabel *labelCommentText;
+
+-(void)bind:(FlickrPhotoComment *)flickrPhotoComment;
 
 
 @end

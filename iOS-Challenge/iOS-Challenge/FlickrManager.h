@@ -10,6 +10,7 @@
 #import <AFNetworking/AFNetworking.h>
 #import "FlickrPhoto.h"
 #import "FlickrPhotoOwner.h"
+#import "FlickrPhotoComment.h"
 
 @interface FlickrManager : NSObject
 
@@ -20,5 +21,6 @@
 
 +(void)getRecentPhotosList:(void (^)(NSArray *recentPhotos))successBlock failure:(void (^)(NSString *failureDesciption))failureBlock;
 +(void)getUserInfo:(void (^)(FlickrPhotoOwner *photoOwnerInfo))successBlock failure:(void (^)(NSString *failureDesciption))failureBlock userId:(NSString *)UserId;
++(void)getComments:(void (^)(NSArray *arrayComments))successBlock failure:(void (^)(NSString *failureDesciption))failureBlock photoId:(NSString *)photoId;
 
 @end

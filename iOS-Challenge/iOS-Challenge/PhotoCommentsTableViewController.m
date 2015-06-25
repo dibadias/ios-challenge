@@ -7,10 +7,13 @@
 //
 
 #import "PhotoCommentsTableViewController.h"
+#import "FlickrManager.h"
+#import "PhotoCommentTableViewCell.h"
 
 @interface PhotoCommentsTableViewController ()
 
 @end
+static NSString * const reuseIdentifier = @"PhotoCommentCellIdentifier";
 
 @implementation PhotoCommentsTableViewController
 
@@ -22,6 +25,15 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    [FlickrManager getComments:^(NSArray *arrayComments) {
+        self.commentsArray = arrayComments;
+        [self.tableView reloadData];
+    } failure:^(NSString *failureDesciption) {
+        
+    } photoId:self.flickrPhoto.photoId];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -38,15 +50,16 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return 5;
+    return [self.commentsArray count];
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PhotoCommentCellIdentifier" forIndexPath:indexPath];
     
-    // Configure the cell...
-    [[cell textLabel] setText:@"AEW"];
+    PhotoCommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
+    FlickrPhotoComment *flickrPhotoComment = self.commentsArray[indexPath.row];
+    
+    [cell bind:flickrPhotoComment];
     
     return cell;
 }

@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "FlickrPhoto.h"
 @interface PhotoCommentsTableViewController : UITableViewController
+
+@property (strong) NSArray *commentsArray;
+
+@property (strong) FlickrPhoto *flickrPhoto;
 
 @end

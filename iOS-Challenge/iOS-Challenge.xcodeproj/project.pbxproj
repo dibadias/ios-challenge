@@ -24,6 +24,7 @@
 		E7A92F811B3B9BF30039057F /* PhotoCommentsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7A92F801B3B9BF30039057F /* PhotoCommentsTableViewController.m */; };
 		E7A92F841B3BB1EB0039057F /* FlickrPhotoOwner.m in Sources */ = {isa = PBXBuildFile; fileRef = E7A92F831B3BB1EB0039057F /* FlickrPhotoOwner.m */; };
 		E7A92F871B3BC9640039057F /* PhotoCommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E7A92F861B3BC9640039057F /* PhotoCommentTableViewCell.m */; };
+		E7A92F8A1B3BCB9F0039057F /* FlickrPhotoComment.m in Sources */ = {isa = PBXBuildFile; fileRef = E7A92F891B3BCB9F0039057F /* FlickrPhotoComment.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,8 @@
 		E7A92F831B3BB1EB0039057F /* FlickrPhotoOwner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlickrPhotoOwner.m; sourceTree = "<group>"; };
 		E7A92F851B3BC9640039057F /* PhotoCommentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoCommentTableViewCell.h; sourceTree = "<group>"; };
 		E7A92F861B3BC9640039057F /* PhotoCommentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoCommentTableViewCell.m; sourceTree = "<group>"; };
+		E7A92F881B3BCB9F0039057F /* FlickrPhotoComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlickrPhotoComment.h; sourceTree = "<group>"; };
+		E7A92F891B3BCB9F0039057F /* FlickrPhotoComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlickrPhotoComment.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +205,8 @@
 				E7A92F741B3B78CE0039057F /* FlickrPhoto.m */,
 				E7A92F821B3BB1EB0039057F /* FlickrPhotoOwner.h */,
 				E7A92F831B3BB1EB0039057F /* FlickrPhotoOwner.m */,
+				E7A92F881B3BCB9F0039057F /* FlickrPhotoComment.h */,
+				E7A92F891B3BCB9F0039057F /* FlickrPhotoComment.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -353,6 +358,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7A92F8A1B3BCB9F0039057F /* FlickrPhotoComment.m in Sources */,
 				E7A92F6D1B3B6E1F0039057F /* GalleryTableViewCell.m in Sources */,
 				E7A92F3E1B3B68650039057F /* AppDelegate.m in Sources */,
 				E7A92F781B3B7A3F0039057F /* FlickrManager.m in Sources */,

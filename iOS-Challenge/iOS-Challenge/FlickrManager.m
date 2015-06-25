@@ -101,7 +101,40 @@
 
 }
 
-
++(void)getComments:(void (^)(NSArray *arrayComments))successBlock failure:(void (^)(NSString *failureDesciption))failureBlock photoId:(NSString *)photoId{
+    
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    NSDictionary *parameters = @{@"method": @"flickr.photos.comments.getList",
+                                 @"api_key":[[self sharedFlickrManager]flickrKey],
+                                 @"format":@"json",
+                                 @"nojsoncallback":@"1",
+                                 @"photo_id":@"16767833635",
+                                 };
+    
+    [manager GET:[[self sharedFlickrManager]baseUrl] parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSArray *flickrPhotoComments = [[responseObject objectForKey:@"comments"] objectForKey:@"comment"];
+        
+        NSMutableArray *comments = [NSMutableArray array];
+        
+        for (NSDictionary *photoDict in flickrPhotoComments){
+            
+            FlickrPhotoComment *flickrComment = [MTLJSONAdapter modelOfClass:[FlickrPhotoComment class] fromJSONDictionary:photoDict error:nil];
+            [flickrComment setPhotoUserComment:[self photoUserComment:flickrComment]];
+            [comments addObject:flickrComment];
+            
+        }
+        
+        if (successBlock) successBlock(comments);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        if (failureBlock) failureBlock([error description]);
+    }];
+    
+}
 
 
 #pragma mark
@@ -128,7 +161,12 @@
     return photoOwnerUrl;
 }
 
-
++ (NSString*)photoUserComment:(FlickrPhotoComment *)flickrPhotoComment {
+    //http://farm{icon-farm}.staticflickr.com/{icon-server}/buddyicons/{nsid}.jpg
+    NSString *photoUserComment = [NSString stringWithFormat:@"https://farm%@.staticflickr.com/%@/buddyicons/%@.jpg",
+                               flickrPhotoComment.iconFarm, flickrPhotoComment.iconServer, flickrPhotoComment.authorId];
+    return photoUserComment;
+}
 
 
 @end
