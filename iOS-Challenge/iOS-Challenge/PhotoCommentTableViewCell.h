@@ -14,6 +14,9 @@
 
 @property IBOutlet UILabel *labelCommentUserName;
 @property IBOutlet UILabel *labelCommentText;
+@property IBOutlet UILabel *labelCommentDateTime;
+
+@property (strong) NSDictionary *fontDetails;
 
 -(void)bind:(FlickrPhotoComment *)flickrPhotoComment;
 

@@ -7,6 +7,8 @@
 //
 
 #import "FlickrPhotoComment.h"
+#import "NSValueTransformer+MTLPredefinedTransformerAdditions.h"
+#import "MTLValueTransformer.h"
 
 @implementation FlickrPhotoComment
 

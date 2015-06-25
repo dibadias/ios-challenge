@@ -24,5 +24,5 @@
 
 //Custom Properties
 @property (strong) NSString *photoUserComment;
-
+@property (strong) NSAttributedString *userCommentAttributed;
 @end

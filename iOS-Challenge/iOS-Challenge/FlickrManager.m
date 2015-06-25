@@ -26,14 +26,14 @@
         flickrManager.flickrKey = [dict objectForKey:@"flickrKey"];
         flickrManager.flickrSecret = [dict objectForKey:@"flickrSecret"];
         
-        flickrManager.page = 1;
     });
     
     return flickrManager;
 
     
 }
-
+#pragma mark
+#pragma mark Flickr Api Communication
 
 +(void)getRecentPhotosList:(void (^)(NSArray *recentPhotos))successBlock failure:(void (^)(NSString *failureDesciption))failureBlock pageNumber:(int)pageNumber{
     
@@ -44,9 +44,9 @@
                                  @"api_key":[[self sharedFlickrManager]flickrKey],
                                  @"format":@"json",
                                  @"nojsoncallback":@"1",
-                                 @"page":[NSString stringWithFormat:@"%d",[[FlickrManager sharedFlickrManager]page]],
-                                 @"per_page":@"10",
-                                 @"extras":@"views,owner_name"};
+                                 @"page":[NSString stringWithFormat:@"%d",pageNumber],
+                                 @"extras":@"views,owner_name",
+                                 @"per_page":@"20"};
     
     [manager GET:[[self sharedFlickrManager]baseUrl] parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
@@ -112,8 +112,9 @@
                                  @"api_key":[[self sharedFlickrManager]flickrKey],
                                  @"format":@"json",
                                  @"nojsoncallback":@"1",
-                                 @"photo_id":@"16767833635",
+                                 @"photo_id":photoId,
                                  };
+    //photoId to test comments:16767833635
     
     [manager GET:[[self sharedFlickrManager]baseUrl] parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
@@ -125,6 +126,7 @@
             
             FlickrPhotoComment *flickrComment = [MTLJSONAdapter modelOfClass:[FlickrPhotoComment class] fromJSONDictionary:photoDict error:nil];
             [flickrComment setPhotoUserComment:[self photoUserComment:flickrComment]];
+            
             [comments addObject:flickrComment];
             
         }
@@ -143,13 +145,16 @@
 #pragma mark Utils
 + (NSString *)photoThumbUrl:(FlickrPhoto *)flickrPhoto{
     //https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}.jpg
-    NSString *photoThumbUrl = [NSString stringWithFormat:@"https://farm%@.staticflickr.com/%@/%@_%@_t.jpg", flickrPhoto.farm, flickrPhoto.server, flickrPhoto.photoId, flickrPhoto.secret];
-    return photoThumbUrl;
     
+    NSString *photoThumbUrl = [NSString stringWithFormat:@"https://farm%@.staticflickr.com/%@/%@_%@_t.jpg",
+                               flickrPhoto.farm, flickrPhoto.server, flickrPhoto.photoId, flickrPhoto.secret];
+   
+    return photoThumbUrl;
 }
 
 + (NSString*)photoBigSizeUrl:(FlickrPhoto *)flickrPhoto {
     //http://farm{icon-farm}.staticflickr.com/{icon-server}/buddyicons/{nsid}.jpg
+    
     NSString *photoBigSizeUrl = [NSString stringWithFormat:@"https://farm%@.staticflickr.com/%@/%@_%@_b.jpg",
                                  flickrPhoto.farm, flickrPhoto.server, flickrPhoto.photoId, flickrPhoto.secret];
     
@@ -158,15 +163,19 @@
 
 + (NSString*)photoOwnerUrl:(FlickrPhotoOwner *)flickPhotoOwner {
     //http://farm{icon-farm}.staticflickr.com/{icon-server}/buddyicons/{nsid}.jpg
+    
     NSString *photoOwnerUrl = [NSString stringWithFormat:@"https://farm%@.staticflickr.com/%@/buddyicons/%@.jpg",
                                flickPhotoOwner.iconFarm, flickPhotoOwner.iconServer, flickPhotoOwner.idOwner];
+    
     return photoOwnerUrl;
 }
 
 + (NSString*)photoUserComment:(FlickrPhotoComment *)flickrPhotoComment {
     //http://farm{icon-farm}.staticflickr.com/{icon-server}/buddyicons/{nsid}.jpg
+    
     NSString *photoUserComment = [NSString stringWithFormat:@"https://farm%@.staticflickr.com/%@/buddyicons/%@.jpg",
                                flickrPhotoComment.iconFarm, flickrPhotoComment.iconServer, flickrPhotoComment.authorId];
+    
     return photoUserComment;
 }
 

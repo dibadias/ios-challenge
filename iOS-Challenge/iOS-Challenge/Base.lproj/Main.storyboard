@@ -280,12 +280,22 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YRc-Kq-x4A">
-                                            <rect key="frame" x="64" y="36" width="528" height="21"/>
+                                            <rect key="frame" x="64" y="36" width="552" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="wCx-gj-zcI"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SP6-go-8p8">
+                                            <rect key="frame" x="532" y="11" width="84" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="MQV-jR-i1t"/>
+                                                <constraint firstAttribute="width" constant="84" id="NV3-7p-ft3"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <color key="textColor" red="0.36624338899999997" green="0.44157171950000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -297,12 +307,15 @@
                                         <constraint firstItem="YRc-Kq-x4A" firstAttribute="top" secondItem="oWM-0k-spV" secondAttribute="bottom" constant="4" id="ee6-VV-teU"/>
                                         <constraint firstItem="kDr-8h-AHb" firstAttribute="top" secondItem="fLg-wI-Aj2" secondAttribute="topMargin" id="eqb-cT-zzK"/>
                                         <constraint firstItem="YRc-Kq-x4A" firstAttribute="leading" secondItem="kDr-8h-AHb" secondAttribute="trailing" constant="8" id="m14-Em-8QX"/>
-                                        <constraint firstItem="YRc-Kq-x4A" firstAttribute="trailing" secondItem="fLg-wI-Aj2" secondAttribute="trailingMargin" constant="-24" id="qj2-ud-w9H"/>
+                                        <constraint firstItem="YRc-Kq-x4A" firstAttribute="trailing" secondItem="fLg-wI-Aj2" secondAttribute="trailingMargin" id="qj2-ud-w9H"/>
+                                        <constraint firstItem="SP6-go-8p8" firstAttribute="trailing" secondItem="fLg-wI-Aj2" secondAttribute="trailingMargin" id="qqb-rw-qUv"/>
+                                        <constraint firstItem="SP6-go-8p8" firstAttribute="top" secondItem="fLg-wI-Aj2" secondAttribute="topMargin" constant="3" id="svp-ds-fLM"/>
                                         <constraint firstItem="kDr-8h-AHb" firstAttribute="leading" secondItem="fLg-wI-Aj2" secondAttribute="leadingMargin" id="yed-SZ-0et"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="imageViewCommentUser" destination="kDr-8h-AHb" id="tej-nL-F5E"/>
+                                    <outlet property="labelCommentDateTime" destination="SP6-go-8p8" id="J88-Bd-Y3m"/>
                                     <outlet property="labelCommentText" destination="YRc-Kq-x4A" id="ibJ-6X-Q3Y"/>
                                     <outlet property="labelCommentUserName" destination="oWM-0k-spV" id="ocy-Xo-8By"/>
                                 </connections>
@@ -316,7 +329,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="odd-eV-G69" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2199.5" y="545"/>
+            <point key="canvasLocation" x="2199" y="545"/>
         </scene>
     </scenes>
 </document>

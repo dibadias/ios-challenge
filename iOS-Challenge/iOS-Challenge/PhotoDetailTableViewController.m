@@ -31,7 +31,6 @@
     UIImage *placeholderImage = [UIImage imageNamed:@"flickr-noImage-grey"];
     NSURL *urlBigPhoto = [NSURL URLWithString:self.flickPhoto.photoBigSizeUrl];
     [self.imageViewPhotoBig setImageWithURL:urlBigPhoto placeholderImage:placeholderImage];
-
     
     [FlickrManager getUserInfo:^(FlickrPhotoOwner *photoOwnerInfo) {
         self.flickrOwner = photoOwnerInfo;
@@ -55,6 +54,8 @@
 
 }
 
+#pragma mark
+#pragma mark TableView Delegates
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 3;
 }
@@ -72,27 +73,9 @@
     if ([segue.identifier isEqualToString:@"CommentSegueIdentifier"]) {
         
         PhotoCommentsTableViewController *photoCommentTableViewController = (PhotoCommentsTableViewController*) segue.destinationViewController;
-        
         photoCommentTableViewController.flickrPhoto = self.flickPhoto;
 
-        
-        /*self.commentsViewController = (CommentsTableViewController*) segue.destinationViewController;
-        
-        
-        self.commentsViewController.delegate = self;
-        self.commentsViewController.flickrPhoto = self.flickrPhoto;
-         */
-    }
+     }
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

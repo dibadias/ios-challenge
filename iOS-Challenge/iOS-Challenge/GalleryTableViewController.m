@@ -59,9 +59,9 @@ static NSString * const reuseIdentifierLoadMore = @"LoadMorePhotosIdentifier";
         [SVProgressHUD dismiss];
 
     } failure:^(NSString *failureDesciption) {
-
-        [SVProgressHUD dismiss];
-
+        
+        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"Connection problem :(", @"")];
+        
     } pageNumber:page];
     
 }
@@ -86,9 +86,11 @@ static NSString * const reuseIdentifierLoadMore = @"LoadMorePhotosIdentifier";
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     NSUInteger row = [indexPath row];
     NSUInteger count = [self.photoArray count];
     
+    //for the LoadMoreCell
     if (row == count){
         return 50.f;
     }
@@ -102,6 +104,7 @@ static NSString * const reuseIdentifierLoadMore = @"LoadMorePhotosIdentifier";
     NSUInteger row = [indexPath row];
     NSUInteger count = [self.photoArray count];
     
+    //Testing if the cell is LoadMore
     if (row == count){
         
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierLoadMore forIndexPath:indexPath];
@@ -132,9 +135,11 @@ static NSString * const reuseIdentifierLoadMore = @"LoadMorePhotosIdentifier";
     NSUInteger row = [indexPath row];
     NSUInteger count = [self.photoArray count];
     
+    //if LoadMoreCell take new photos
     if (row == count){
         [self updateList:self.currentPageNumber+1];
-        
+        [SVProgressHUD showWithStatus:NSLocalizedString(@"Loading...", @"")];
+
     }
 }
 
@@ -144,42 +149,6 @@ static NSString * const reuseIdentifierLoadMore = @"LoadMorePhotosIdentifier";
     return YES;
 }
 
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"PhotoDetailSegueIdentifier"])
